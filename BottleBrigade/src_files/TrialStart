@@ -1,0 +1,48 @@
+#!/bin/bash
+
+##############################################################################
+# File: TrialStart
+#
+# Description: Script launched from /etc/rc.local on boot.
+#              Sets system time from trial_start_time.txt, schedules shutdown
+#              from trial_end_time.txt, launches start_trial.py,
+#              and relaunches start_trial.py if it exits unexpectedly.
+#
+# Authors: Written by Team Bottle Brigade for research trial purposes.
+# Primary Author: Jill Thetford (jthetfor@calpoly.edu)
+#
+# Date: March 3, 2016
+##############################################################################
+
+# Disables HDMI port to conserve power
+#sudo /usr/bin/tvservice -o
+
+# Sets the system time if trial_start_time.txt exists and is not empty
+START_TIME="/boot/BottleBrigade/trial_start_time.txt"
+END_TIME="/boot/BottleBrigade/trial_end_time.txt"
+if [[ -s $START_TIME ]]; then
+	echo "Setting system time"
+	sudo date -s "`cat $START_TIME`"
+fi;
+
+echo "Starting trial" >> /boot/BottleBrigade/error_log.txt
+date >> /boot/BottleBrigade/error_log.txt
+
+# Calculate Trial Length
+if [[ -s $END_TIME ]]; then
+	TRIAL_DURATION=`sudo python /boot/BottleBrigade/src_files/calc_trial_length.py`
+	echo "Trial Length: $TRIAL_DURATION Minutes" >> /boot/BottleBrigade/error_log.txt
+	sudo shutdown --poweroff +$TRIAL_DURATION
+fi;
+
+# Launches main program trial_start.py
+TRIAL="sudo python /boot/BottleBrigade/src_files/start_trial.py &" 
+
+# Relaunches trial_start.py if exited unexepectedly
+until $TRIAL; do
+	echo "" >> /boot/BottleBrigade/error_log.txt
+	echo "!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!" >> /boot/BottleBrigade/error_log.txt
+	date >> /boot/BottleBrigade/error_log.txt
+	echo "ERROR: TRIAL SCRIPT STOPPED... RESTARTING..." >> /boot/BottleBrigade/error_log.txt
+	echo "!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!" >> /boot/BottleBrigade/error_log.txt
+done;
