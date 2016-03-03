@@ -15,7 +15,7 @@
 ##############################################################################
 
 # Disables HDMI port to conserve power
-#sudo /usr/bin/tvservice -o
+sudo /usr/bin/tvservice -o
 
 # Sets the system time if trial_start_time.txt exists and is not empty
 START_TIME="/boot/BottleBrigade/trial_start_time.txt"
