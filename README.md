@@ -15,6 +15,6 @@ Date: 3/6/2016
 
 **CONTAINED IN THIS REPOSITORY**:  
   -The BottleBrigade folder with the latest version of all the code pertaining to the project  
-  -A link to the SD card image  
+  -Link to the SD card image: https://drive.google.com/open?id=0BxSk2jEQNcobY3BBMjIzbU5ZUjg
   -User Manual  
   -Manufacturing Plan containing instructions to reproduce the system  
