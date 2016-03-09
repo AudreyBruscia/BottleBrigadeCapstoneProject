@@ -13,8 +13,15 @@
 
 import datetime
 import math
+import os.path
 
 def calc_length():
+	# if trial_end_time.txt does not exist or is empty, don't calculate trial length
+	if (not os.path.exists("/boot/BottleBrigade/trial_end_time.txt")):
+		return -1
+	if (not (os.path.getsize("/boot/BottleBrigade/trial_end_time.txt") > 0)):
+		return -1
+	
 	# open trial start and end time files
 	f_end_time = open("/boot/BottleBrigade/trial_end_time.txt", "r")
 
@@ -33,6 +40,10 @@ def calc_length():
 	# get the time from strings as datetime objects
 	start = datetime.datetime.now()
 	end = datetime.datetime.strptime(str_end, fmt_str)
+	
+	# end is null because trial_end_time.txt formatted wrong
+	if (end is None):
+		return -1
 
 	# calculate the time between the start and end times
 	trial_len = end - start
