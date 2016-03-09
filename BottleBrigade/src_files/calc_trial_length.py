@@ -40,10 +40,6 @@ def calc_length():
 	# get the time from strings as datetime objects
 	start = datetime.datetime.now()
 	end = datetime.datetime.strptime(str_end, fmt_str)
-	
-	# end is null because trial_end_time.txt formatted wrong
-	if (end is None):
-		return -1
 
 	# calculate the time between the start and end times
 	trial_len = end - start
