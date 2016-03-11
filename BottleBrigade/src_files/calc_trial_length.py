@@ -16,13 +16,6 @@ import math
 import os.path
 
 def calc_length():
-	# if trial_end_time.txt does not exist, don't calculate trial length
-	if (not os.path.exists("/boot/BottleBrigade/trial_end_time.txt")):
-		return -1
-	# if trial_end_time.txt does not contain enough characters, don't calculate trial length
-	if (os.path.getsize("/boot/BottleBrigade/trial_end_time.txt") < 21)):
-		return -1
-	
 	# open trial start and end time files
 	f_end_time = open("/boot/BottleBrigade/trial_end_time.txt", "r")
 
